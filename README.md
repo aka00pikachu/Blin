@@ -30,7 +30,8 @@ FROM HERE you have some options:
 
 - You can clone this repository in GitHub (making a new copy), and we can use
   that repository instead of this one, so that it's owned by you instead of
-  me.  Either way is fine with me; if you think it would be more fun to be the
+  me.  (Use the **Fork** button which should be in the upper right of this
+  window.)  Either way is fine with me; if you think it would be more fun to be the
   owner, **do it!**  (You know what... even if you *don't* think it would be
   more fun, **do it.**)  After doing that, check it out from GitHub again, using the
   instructions above, but with your new Repository URL, and a different directory
