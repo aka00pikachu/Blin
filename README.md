@@ -3,7 +3,7 @@ In Android Studio 2.2.3:
 1. File -> New -> Project from Version Control -> GitHub
 
 2. Clone Repository:
-   - Repository URL: https://github.com/kuhrusty/Calculater.git
+   - Repository URL: https://github.com/ScottyMcCotty/Calculater.git
    - Parent Directory: (whatever you want; probably
      /home/.../AndroidStudioProjects)
    - Directory Name: (whatever you want; probably Calculater)
@@ -27,22 +27,6 @@ or a media device... probably camera) and wait for an astounding green
 triangle to show up on its screen.
 
 FROM HERE you have some options:
-
-- You can clone this repository in GitHub (making a new copy), and we can use
-  that repository instead of this one, so that it's owned by you instead of
-  me.  (Use the **Fork** button which should be in the upper right of this
-  window.)  Either way is fine with me; if you think it would be more fun to be the
-  owner, **do it!**  (You know what... even if you *don't* think it would be
-  more fun, **do it.**  Then, under Settings (in the menubar-thingie near the top
-  of the GitHub window), choose Collaborators on the left side, and add me as a
-  collaborator.)  After doing that, check it out from GitHub again, using the
-  instructions above, but with your new Repository URL, and a different directory
-  name.  (There's a way to make
-  your already-checked-out version point at the new repository, but I'm not
-  good enough with git to know what it is; I'd have to look.)  If you want to keep
-  the same directory name, you could close the project in Android Studio and then
-  delete the whole AndroidStudioProjects/Calculater directory before checking out
-  your new repository.
 
 - To make code changes, click the "Project" tab on the left edge of the Android
   Studio window; your code is under app -> java -> com.scottrealapps.calculater
