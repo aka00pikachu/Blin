@@ -49,7 +49,9 @@ FROM HERE you have some options:
  
   Then click that green triangle next to the "app" button to compile & run the
   changes on your phone.  IF YOU SEE A SICKLY YELLOW TRIANGLE then everything
-  is right.
+  is right.  *Err, well, except that we added random colors... so you won't be
+  able to see this change at all unless you comment out the bit in GLRenderer.java
+  line 100.*
 
 - When you make changes, you can see what you've done by clicking the "Version
   Control" tab at the bottom of the Android Studio window.  On each of those
@@ -71,9 +73,10 @@ FROM HERE you have some options:
   YOU in six months when you're trying to remember which change this was) and
   hit commit.
 
-  Now, I don't remember whether that pushes your changes to GitHub, or just
-  commits them to your local copy of the git repository... well, we can figure
-  that out later.
+  Now, that commits your changes to **your local clone** of the repository; to
+  **push them to GitHub**, from the main menu, choose VCS -> Git -> Push; that
+  should give you a window with a list of the changes you've committed to your
+  local repository, with a "Push" button which should upload them to GitHub.
 
 OK, son, have fun!  **I love you**, and this is a public repository, so everyone
 in the entire world knows I said that.  *Sorry.*
