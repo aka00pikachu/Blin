@@ -9,6 +9,8 @@ import android.util.Log;
 import com.scottrealapps.calculater.shapes.Square;
 import com.scottrealapps.calculater.shapes.Triangle;
 
+import java.util.Random;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -26,6 +28,8 @@ public class GLRenderer implements GLSurfaceView.Renderer {
 
     private Triangle triangle;
     private Square square;
+    Random rand = new Random();
+    private float eyeZ = -3;
 
     //  from https://developer.android.com/training/graphics/opengl/draw.html
     public static int loadShader(int type, String shaderCode) {
@@ -67,7 +71,16 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         // Set the camera position (View matrix)
-        Matrix.setLookAtM(viewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        float eyeX = 0;
+        float eyeY = 0;
+//        float eyeZ = -3;
+        float centerX = 0;
+        float centerY = 0;
+        float centerZ = 0;
+        float upX = 0;
+        float upY = 1;
+        float upZ = 0;
+        Matrix.setLookAtM(viewMatrix, 0, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
@@ -84,6 +97,7 @@ public class GLRenderer implements GLSurfaceView.Renderer {
         float[] scratch = new float[16];
         Matrix.multiplyMM(scratch, 0, mvpMatrix, 0, rotationMatrix, 0);
 
+triangle.setColor(100 + rand.nextInt(156), 100 + rand.nextInt(156), 100 + rand.nextInt(156));
         triangle.draw(scratch);
     }
 
@@ -94,4 +108,12 @@ public class GLRenderer implements GLSurfaceView.Renderer {
     public void setAngle(float angle) {
         this.angle = angle;
     }
+
+    public float getZoom() {
+        return eyeZ;
+    }
+    public void setZoom(float eyeZ) {
+        this.eyeZ = eyeZ;
+    }
+
 }

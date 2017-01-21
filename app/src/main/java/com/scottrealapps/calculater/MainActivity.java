@@ -61,25 +61,39 @@ public class MainActivity extends AppCompatActivity {
             float x = me.getX();
             float y = me.getY();
 
+if (me.getPointerCount() > 1) Log.d("Scott", "POINTER COUNT IS " + me.getPointerCount());
             if (me.getAction() == MotionEvent.ACTION_MOVE) {
+                if (x < getWidth() / 5) {
+//Log.d("Scott", "we think we're zooming in/out");
+                    float zoom = 1.0f;
+                    if (y > prevY) {
+                        zoom = 1.1f;
+                    } else if (y < prevY) {
+                        zoom = 0.9f;
+                    }
+                    renderer.setZoom(renderer.getZoom() * zoom);
+                    requestRender();
+                } else {
+Log.d("Scott", "got ACTION_MOVE " + x + ", " + y);
 
-                float dx = x - prevX;
-                float dy = y - prevY;
+                    float dx = x - prevX;
+                    float dy = y - prevY;
 
-                // reverse direction of rotation above the mid-line
-                if (y > getHeight() / 2) {
-                    dx = dx * -1 ;
+                    // reverse direction of rotation above the mid-line
+                    if (y > getHeight() / 2) {
+                        dx = dx * -1;
+                    }
+
+                    // reverse direction of rotation to left of the mid-line
+                    if (x < getWidth() / 2) {
+                        dy = dy * -1;
+                    }
+
+                    renderer.setAngle(
+                            renderer.getAngle() +
+                                    ((dx + dy) * -TOUCH_SCALE_FACTOR));
+                    requestRender();
                 }
-
-                // reverse direction of rotation to left of the mid-line
-                if (x < getWidth() / 2) {
-                    dy = dy * -1 ;
-                }
-
-                renderer.setAngle(
-                        renderer.getAngle() +
-                        ((dx + dy) * -TOUCH_SCALE_FACTOR));
-                requestRender();
             } else {
 Log.d("Scott", "got MotionEvent " + me);
             }
@@ -89,45 +103,6 @@ Log.d("Scott", "got MotionEvent " + me);
             return true;
         }
     }
-
-//    public class MyGLRenderer implements GLSurfaceView.Renderer {
-//        private Triangle triangle;
-//        private Square square;
-//
-//        public static int loadShader(int type, String shaderCode){
-//
-//        // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
-//    // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
-//    int shader = GLES20.glCreateShader(type);
-//
-//    // add the source code to the shader and compile it
-//    GLES20.glShaderSource(shader, shaderCode);
-//    GLES20.glCompileShader(shader);
-//
-//    return shader;
-//}
-//        @Override
-//        public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-//            // Set the background frame color
-//            GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-//
-//            triangle = new Triangle();
-//            square = new Square();
-//        }
-//        @Override
-//        public void onDrawFrame(GL10 unused) {
-//            // Redraw background color
-//            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-//
-//            Triangle tt = new Triangle();
-//            tt.someMethod();
-//
-//        }
-//        @Override
-//        public void onSurfaceChanged(GL10 unused, int width, int height) {
-//            GLES20.glViewport(0, 0, width, height);
-//        }
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
