@@ -56,6 +56,15 @@ public class Triangle {
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 1.0f };
 
+    /**
+     * Sets the triangle's color; all values should be between 0 and 255.
+     */
+    public void setColor(int r, int g, int b) {
+        color[0] = (float)r / (float)255.0;
+        color[1] = (float)g / (float)255.0;
+        color[2] = (float)b / (float)255.0;
+    }
+
     public Triangle() {
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
