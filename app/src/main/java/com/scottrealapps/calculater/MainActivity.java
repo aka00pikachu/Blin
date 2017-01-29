@@ -1,6 +1,7 @@
 package com.scottrealapps.calculater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -146,6 +147,26 @@ Log.d("Scott", "got MotionEvent " + me);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_canvas) {
+            //  There are a couple of ways to launch a child Activity; if you
+            //  want to get back the user's input etc. from the child Activity,
+            //  then use startActivityForResult(Intent, int); but, we expect
+            //  this to be a one-way trip--they launch the CanvasActivity, and
+            //  never come back--so use startActivity(Intent).
+            Intent intent = new Intent(this, CanvasActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_canvas2) {
+            Intent intent = new Intent(this, CanvasActivity.class);
+            //  Here's an example of passing additional information to the
+            //  activity being launched.  In both cases, CanvasActivity
+            //  instances will be created, but this time, we're passing a flag
+            //  saying we want it to do some things differently.
+            intent.putExtra(CanvasActivity.INTENT_DOUBLE_BUFFER, true);
+            startActivity(intent);
             return true;
         }
 
