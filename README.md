@@ -84,7 +84,8 @@ in the entire world knows I said that.  *Sorry.*
 - The Ball.applyGravity() logic is wrong; sometimes balls don't bounce correctly,
   and/or wind up stuck slightly off the bottom of the screen.  Probably the problem
   is in applyGravity(), but it could also be something wrong with the height &
-  width values being passed in.
+  width values being passed in.  **To test this,** you probably want to drop down
+  to one ball in Scene.java, and add log messages in Ball.applyGravity().
 - Make the selected ball a different color when it gets bounced.
 - Instead of drawCircle(), add a Ball subclass which overrides `draw()` to draw an
   image it loaded from file.  The first half of that sentence is easy; the second
