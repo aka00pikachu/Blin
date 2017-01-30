@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
+import android.widget.Toast;
 
 /**
  * This Activity contains either a A2DView or a Another2DView,depending on
@@ -55,5 +56,7 @@ public class CanvasActivity extends AppCompatActivity {
             animationTimer = new AnimationHandler(view);
             animationTimer.handleMessage(null);  //  start the animation running
         }
+        Toast.makeText(this, getResources().getString(R.string.instructions_slap),
+                Toast.LENGTH_LONG).show();
     }
 }
