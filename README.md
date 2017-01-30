@@ -90,6 +90,7 @@ in the entire world knows I said that.  *Sorry.*
 - ~~Instead of drawCircle(), add a Ball subclass which overrides `draw()` to draw an
   image it loaded from file.  The first half of that sentence is easy; the second
   half is *mostly* easy, but requires that you put the file in the right place.  I
-  may add notes on that later.~~ *I did that; see ImageBall.java.*
+  may add notes on that later.~~ *I did that; see ImageBall.java.  See what happens
+  when you make all three balls in Scene.java into ImageBalls!*
 - Fiddling with the way touch events are handled.  There are other events we could
   add support for.
