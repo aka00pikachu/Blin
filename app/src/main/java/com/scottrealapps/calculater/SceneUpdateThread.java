@@ -19,8 +19,34 @@ public class SceneUpdateThread extends Thread {
     private final Another2DView view;
     private boolean running = false;
 
+    /**
+     * Creates a new thread & adds it as a listener on the given view; when
+     * the surface is created, this thread will start running.
+     */
     public SceneUpdateThread(Another2DView view) {
         this.view = view;
+        view.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+                setRunning(true);
+                start();
+            }
+            @Override
+            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+            }
+            @Override
+            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+                boolean retry = true;
+                setRunning(false);
+                while (retry) {
+                    try {
+                        join();
+                        retry = false;
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+        });
     }
 
     public void setRunning(boolean run) {

@@ -47,32 +47,8 @@ public class CanvasActivity extends AppCompatActivity {
         if ((intent != null) && (intent.getBooleanExtra(INTENT_DOUBLE_BUFFER, false))) {
             setContentView(R.layout.activity_canvas2);
             Another2DView view = (Another2DView)(findViewById(R.id.myView));
-            //  This logic here copied from
-            //  http://www.edu4java.com/en/androidgame/androidgame2.html and
-            //  http://www.edu4java.com/en/androidgame/androidgame3.html
-            final SceneUpdateThread sceneUpdateThread = new SceneUpdateThread(view);
-            view.getHolder().addCallback(new SurfaceHolder.Callback() {
-                @Override
-                public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                    sceneUpdateThread.setRunning(true);
-                    sceneUpdateThread.start();
-                }
-                @Override
-                public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-                }
-                @Override
-                public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                    boolean retry = true;
-                    sceneUpdateThread.setRunning(false);
-                    while (retry) {
-                        try {
-                            sceneUpdateThread.join();
-                            retry = false;
-                        } catch (InterruptedException e) {
-                        }
-                    }
-                }
-            });
+            view.setupListeners();
+            new SceneUpdateThread(view);
         } else {
             setContentView(R.layout.activity_canvas);
             A2DView view = (A2DView)(findViewById(R.id.myView));
