@@ -10,13 +10,13 @@ import android.util.Log;
 public class Ball {
     //  bounciness of 1.0 means it will bounce back up off the ground as fast as
     //  it landed.
-    private float bounciness = 0.9f;
-    private float xpos = 0f;  //  center
-    private float ypos = 0f;  //  center
-    private float radius = 0f;
-    private float dx = 1f;
-    private float dy = 0f;
-    private Paint paint;
+    protected float bounciness = 0.9f;
+    protected float xpos = 0f;  //  center
+    protected float ypos = 0f;  //  center
+    protected float radius = 0f;
+    protected float dx = 0f;
+    protected float dy = 0f;
+    protected Paint paint;
 
     public Ball(Paint paint) {
         this.paint = paint;
