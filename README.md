@@ -87,9 +87,9 @@ in the entire world knows I said that.  *Sorry.*
   width values being passed in.  **To test this,** you probably want to drop down
   to one ball in Scene.java, and add log messages in Ball.applyGravity().
 - Make the selected ball a different color when it gets bounced.
-- Instead of drawCircle(), add a Ball subclass which overrides `draw()` to draw an
+- ~~Instead of drawCircle(), add a Ball subclass which overrides `draw()` to draw an
   image it loaded from file.  The first half of that sentence is easy; the second
   half is *mostly* easy, but requires that you put the file in the right place.  I
-  may add notes on that later.
+  may add notes on that later.~~ *I did that; see ImageBall.java.*
 - Fiddling with the way touch events are handled.  There are other events we could
   add support for.
