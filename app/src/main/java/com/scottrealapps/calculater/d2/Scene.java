@@ -1,6 +1,8 @@
 package com.scottrealapps.calculater.d2;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
@@ -35,12 +37,13 @@ public class Scene implements View.OnTouchListener {
     private ArrayList<Ball> balls = new ArrayList<Ball>();
 
     public Scene(Context context) {
-//        Drawable someImage = getResources().getDrawable(R.drawable.)
+        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
         ballPaint.setColor(context.getResources().getColor(R.color.ballColor));
         ballPaint.setAlpha(255);
 
         balls.add(new Ball(ballPaint));
-        balls.add(new Ball(ballPaint));
+        //  let's make this one use an image.
+        balls.add(new ImageBall(bm, ballPaint));
         balls.add(new Ball(ballPaint));
     }
 
