@@ -27,9 +27,8 @@ or a media device... probably camera) and wait for an astounding randomly colore
 triangle to show up on its screen.
 
 **There should be** an "action bar" with a menu doodad on the right; there, you
-should be able to "Launch a 2D Activity" or "Launch Another 2D Activity" and then
-screw around with bouncy orange balls.  Tapping on the balls should get them to
-bounce more.
+should be able to launch "Slappy Balls" or "Slappy Balls 2" or "Shaky Balls" and then
+screw around with bouncy orange balls.
 
 FROM HERE you have some options:
 
