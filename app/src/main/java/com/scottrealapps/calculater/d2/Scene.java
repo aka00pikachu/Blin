@@ -57,6 +57,14 @@ public class Scene implements View.OnTouchListener {
         }
     }
 
+    public void accelerateEverything(float dx, float dy) {
+        synchronized (sceneLock) {
+            for (int ii = 0; ii < balls.size(); ++ii) {
+                balls.get(ii).adjustVelocity(dx, dy);
+            }
+        }
+    }
+
     public void update(int width, int height) {
         ++updateCount;
         synchronized (sceneLock) {

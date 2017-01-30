@@ -27,6 +27,11 @@
                   android:parentActivityName=".MainActivity"
             >
         </activity>
+        <activity android:name=".MotionActivity"
+                  android:label="@string/action_motion"
+                  android:parentActivityName=".MainActivity"
+            >
+        </activity>
     </application>
 
 </manifest>

@@ -169,6 +169,11 @@ Log.d("Scott", "got MotionEvent " + me);
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_motion) {
+            Intent intent = new Intent(this, MotionActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
