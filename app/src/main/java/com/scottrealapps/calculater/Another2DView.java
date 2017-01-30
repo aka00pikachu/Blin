@@ -28,6 +28,16 @@ public class Another2DView extends SurfaceView {
 
     private void initStuff(Context context) {
         scene = new Scene(context);
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    /**
+     * In the base class, this adds an OnTouchListener.
+     */
+    public void setupListeners() {
         setOnTouchListener(scene);
     }
 
