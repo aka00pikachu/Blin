@@ -61,20 +61,20 @@ public class Ball {
      * Adjusts the ball's position and velocity; returns true if the ball moved.
      */
     public boolean applyGravity(float gravity, int screenW, int screenH) {
-        xpos += dx;
-        ypos += dy;
+        xpos = xpos + dx;
+        ypos = ypos + dy;
         if ((xpos + radius) > screenW) {
             dx = -dx * bounciness;
-            xpos = screenW - radius - (screenW - (xpos + radius));
+            xpos = screenW - radius;// - (screenW - (xpos + radius));
         } else if (xpos < radius) {
             dx = -dx * bounciness;
-            xpos = radius + (radius - xpos);
+            xpos = radius;// + (radius - xpos);
         }
         //  let's let it fly off the top of the screen.  This bit checks for
         //  bounce along the bottom.
         if ((ypos + radius) > screenH) {
             dy = -dy * bounciness;
-            ypos = screenH - radius - (screenH - (ypos + radius));
+            ypos = screenH - radius;// - (screenH - (ypos + radius));
         } else if ((dy != 0f) || ((ypos + radius) != screenH)) {
             dy += gravity;
         }
