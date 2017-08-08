@@ -169,6 +169,12 @@ Log.d("Scott", "got MotionEvent " + me);
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_crime) {
+            Intent intent = new Intent(this, CanvasActivity.class);
+            intent.putExtra(CanvasActivity.INTENT_SHOOTY, true);
+            startActivity(intent);
+            return true;
+        }
         if (id == R.id.action_motion) {
             Intent intent = new Intent(this, MotionActivity.class);
             startActivity(intent);

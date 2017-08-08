@@ -57,6 +57,23 @@ public class Ball {
                (y >= (ypos - radius)) && (y <= (ypos + radius));
     }
 
+    public void applyVelocity() {
+        xpos += dx;
+        ypos += dy;
+    }
+
+    public boolean intersects(float x, float y, float width, float height) {
+        if (((xpos + radius) < x) ||
+            ((xpos - radius) > (x + width)) ||
+            ((ypos + radius) < y) ||
+            ((ypos - radius) > (y + height))) {
+//Log.d("Ball", "(" + xpos + ", " + ypos + ") r " + radius + " DOES NOT intersect x " + x + ", y " + y + ", w " + width + ", h " + height);
+            return false;
+        }
+//Log.d("Ball", "(" + xpos + ", " + ypos + ") r " + radius + " DOES intersect x " + x + ", y " + y + ", w " + width + ", h " + height);
+        return true;
+    }
+
     /**
      * Adjusts the ball's position and velocity; returns true if the ball moved.
      */

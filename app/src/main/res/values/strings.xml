@@ -4,9 +4,11 @@
     <string name="action_canvas">Slappy Balls</string>
     <string name="action_canvas2">Slappy Balls 2</string>
     <string name="action_motion">Shaky Balls</string>
+    <string name="action_crime">Shooty Balls</string>
 
     <string name="instructions_slap">Tap, uhh... tap the balls to move them.</string>
     <string name="instructions_shake">Shake the device to move the balls.</string>
+    <string name="instructions_shoot">Tap the screen to fire.</string>
 
     <string name="no_linear_accelerator">No linear acceleration sensor... life is sad.</string>
 </resources>

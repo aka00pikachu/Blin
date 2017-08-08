@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceView;
 
+import com.scottrealapps.calculater.d2.BouncyScene;
 import com.scottrealapps.calculater.d2.Scene;
 
 /**
@@ -27,9 +28,12 @@ public class Another2DView extends SurfaceView {
     }
 
     private void initStuff(Context context) {
-        scene = new Scene(context);
+        scene = new BouncyScene(context);
     }
 
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
     public Scene getScene() {
         return scene;
     }
@@ -38,7 +42,9 @@ public class Another2DView extends SurfaceView {
      * In the base class, this adds an OnTouchListener.
      */
     public void setupListeners() {
-        setOnTouchListener(scene);
+        if (scene instanceof OnTouchListener) {
+            setOnTouchListener((OnTouchListener)scene);
+        }
     }
 
     @Override
@@ -61,7 +67,7 @@ Log.d("Another2DView", "onLayout(" + changed + ", left " + left + ", top " + top
     public void onDraw(Canvas canvas) {
         //  Unlike A2DView, which repaints its own background before every
         //  onDraw() call, this one has to fill in every pixel in the Canvas.
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.GRAY);//Color.BLACK);
         scene.draw(canvas);
     }
 }

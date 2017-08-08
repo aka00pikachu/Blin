@@ -6,14 +6,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.scottrealapps.calculater.d2.Scene;
+import com.scottrealapps.calculater.d2.BouncyScene;
 
 /**
  * This is one approach at a 2D view.
  */
 public class A2DView extends View {
 
-    private Scene scene;
+    private BouncyScene scene;
 
     public A2DView(Context context) {
         super(context);
@@ -25,7 +25,7 @@ public class A2DView extends View {
     }
 
     private void initStuff(Context context) {
-        scene = new Scene(context);
+        scene = new BouncyScene(context);
         setOnTouchListener(scene);
     }
 
