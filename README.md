@@ -79,7 +79,7 @@ FROM HERE you have some options:
 OK, son, have fun!  **I love you**, and this is a public repository, so everyone
 in the entire world knows I said that.  *Sorry.*
 
-###Next things to do
+### Next things to do
 
 - The Ball.applyGravity() logic is wrong; sometimes balls don't bounce correctly,
   and/or wind up stuck slightly off the bottom of the screen.  Probably the problem
