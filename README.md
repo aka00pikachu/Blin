@@ -1,4 +1,4 @@
-In Android Studio 2.2.3:
+In Android Studio 2.3.3:
 
 1. File -> New -> Project from Version Control -> GitHub
 
@@ -94,3 +94,5 @@ in the entire world knows I said that.  *Sorry.*
   when you make all three balls in Scene.java into ImageBalls!*
 - Fiddling with the way touch events are handled.  There are other events we could
   add support for.
+- Add a new Activity, like if you want to experiment with the gyroscope or step
+  counter.  For instructions on that, see CONTRIBUTING.md.
