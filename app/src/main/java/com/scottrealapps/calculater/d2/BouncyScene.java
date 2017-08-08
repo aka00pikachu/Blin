@@ -26,6 +26,9 @@ public class BouncyScene implements Scene, View.OnTouchListener {
     private int updateCount = 0;  //  the total number of updates; may roll.
 
     private float gravity = 10f;
+    private boolean openTopped = true;
+    private int height;
+    private int width;
 
     //  We could have one Paint per Ball, or pass separate Paint objects into
     //  Ball.draw(Canvas), but in case we want to share the same Paint object
@@ -53,7 +56,36 @@ public class BouncyScene implements Scene, View.OnTouchListener {
     }
 
     @Override
+    public float getGravity() {
+        return gravity;
+    }
+    @Override
+    public void setGravity(float dy) {
+        gravity = dy;
+    }
+
+    @Override
+    public boolean isOpenTopped() {
+        return openTopped;
+    }
+    @Override
+    public void setOpenTopped(boolean set) {
+        openTopped = set;
+    }
+
+    @Override
+    public int getScreenH() {
+        return height;
+    }
+    @Override
+    public int getScreenW() {
+        return width;
+    }
+
+    @Override
     public void setViewSize(int width, int height) {
+        this.height = height;
+        this.width = width;
         int minD = (width < height) ? width : height;
         synchronized (sceneLock) {
             //  just some assorted initial positions.
@@ -78,9 +110,11 @@ public class BouncyScene implements Scene, View.OnTouchListener {
     @Override
     public void update(int width, int height) {
         ++updateCount;
+        this.height = height;
+        this.width = width;
         synchronized (sceneLock) {
             for (int ii = 0; ii < balls.size(); ++ii) {
-                balls.get(ii).applyGravity(gravity, width, height);
+                balls.get(ii).applyGravity(this);
             }
         }
     }

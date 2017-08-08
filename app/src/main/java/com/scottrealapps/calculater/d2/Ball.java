@@ -77,9 +77,11 @@ public class Ball {
     /**
      * Adjusts the ball's position and velocity; returns true if the ball moved.
      */
-    public boolean applyGravity(float gravity, int screenW, int screenH) {
+    public boolean applyGravity(Scene scene) {
         xpos = xpos + dx;
         ypos = ypos + dy;
+        int screenH = scene.getScreenH();
+        int screenW = scene.getScreenW();
         if ((xpos + radius) > screenW) {
             dx = -dx * bounciness;
             xpos = screenW - radius;// - (screenW - (xpos + radius));
@@ -92,10 +94,14 @@ public class Ball {
         if ((ypos + radius) > screenH) {
             dy = -dy * bounciness;
             ypos = screenH - radius;// - (screenH - (ypos + radius));
+        } else if ((!scene.isOpenTopped()) && (ypos < radius)) {
+            dy = -dy * bounciness;
+            ypos = radius;
         } else if ((dy != 0f) || ((ypos + radius) != screenH)) {
-            dy += gravity;
+            dy += scene.getGravity();
         }
         return (ypos != 0f) || (xpos != 0f);
+//uhh... *that's* not what the javadoc comment says this does!
     }
 
     /**

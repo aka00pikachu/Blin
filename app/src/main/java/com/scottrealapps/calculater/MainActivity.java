@@ -180,6 +180,11 @@ Log.d("Scott", "got MotionEvent " + me);
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_gravity) {
+            Intent intent = new Intent(this, GravityActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -18,6 +18,20 @@ import java.util.ArrayList;
  * else.
  */
 public interface Scene {
+    /**
+     * Gets the acceleration toward the bottom of the screen applied every time
+     * we update.  Probably defaults to 10.
+     */
+    public float getGravity();
+    public void setGravity(float dy);
+    /**
+     * Returns true if objects should be allowed to fly off the top of the
+     * screen, false if not.
+     */
+    public boolean isOpenTopped();
+    public void setOpenTopped(boolean set);
+    public int getScreenH();
+    public int getScreenW();
     public void setViewSize(int width, int height);
     public void accelerateEverything(float dx, float dy);
     public void update(int width, int height);

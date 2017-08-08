@@ -61,6 +61,8 @@ public class CrimeScene implements Scene, View.OnTouchListener, MediaPlayer.OnCo
     private Paint targetPaint = new Paint();
 
 //    private float gravity = 10f;
+    private int height;
+    private int width;
 
     //  We could have one Paint per Ball, or pass separate Paint objects into
     //  Ball.draw(Canvas), but in case we want to share the same Paint object
@@ -181,8 +183,40 @@ public class CrimeScene implements Scene, View.OnTouchListener, MediaPlayer.OnCo
         mp.start();
     }
 
+    /**
+     * Overridden to return 0.
+     */
+    @Override
+    public float getGravity() { return 0f; }
+    /**
+     * Overridden to do nothing.
+     */
+    @Override
+    public void setGravity(float dy) { }
+    /**
+     * Returns false.
+     */
+    @Override
+    public boolean isOpenTopped() { return false; }
+    /**
+     * Overridden to do nothing.
+     */
+    @Override
+    public void setOpenTopped(boolean set) { }
+
+    @Override
+    public int getScreenH() {
+        return height;
+    }
+    @Override
+    public int getScreenW() {
+        return width;
+    }
+
     @Override
     public void setViewSize(int width, int height) {
+        this.height = height;
+        this.width = width;
 //        int minD = (width < height) ? width : height;
         try {
             writeLock.lock();
@@ -212,6 +246,8 @@ public class CrimeScene implements Scene, View.OnTouchListener, MediaPlayer.OnCo
 
     @Override
     public void update(int width, int height) {
+        this.height = height;
+        this.width = width;
         ++updateCount;
         try {
             writeLock.lock();
