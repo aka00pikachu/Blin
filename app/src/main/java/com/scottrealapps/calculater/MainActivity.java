@@ -185,6 +185,11 @@ Log.d("Scott", "got MotionEvent " + me);
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_tiles) {
+            Intent intent = new Intent(this, TileActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
