@@ -3,7 +3,7 @@ In Android Studio 2.3.3:
 1. File -> New -> Project from Version Control -> GitHub
 
 2. Clone Repository:
-   - Repository URL: https://github.com/ScottyMcCotty/Calculater.git
+   - Repository URL: https://github.com/Panzarotti/EleeStuff.git
    - Parent Directory: (whatever you want; probably
      /home/.../AndroidStudioProjects)
    - Directory Name: (whatever you want; probably Calculater)
