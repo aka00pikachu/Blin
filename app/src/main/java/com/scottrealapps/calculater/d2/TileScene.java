@@ -240,6 +240,15 @@ public class TileScene implements Scene, View.OnTouchListener {
     @Override
     public void update(int width, int height) {
         ++updateCount;
+
+        if ((topVisibleRowOffset + speed) > 0) {
+            //  That means we need to have a new topVisibleRow, and we need to
+            //  adjust topVisibleRowOffest back up above the top of the screen
+            //  (making it negative).
+
+        }
+
+
 //        this.height = height;
 //        this.width = width;
 //        synchronized (sceneLock) {
@@ -259,6 +268,12 @@ public class TileScene implements Scene, View.OnTouchListener {
                 row.draw(canvas, currentRowTop, colWidth);
                 currentRowTop += row.height;
             }
+        }
+        //Now draw the vertical lines
+        //  because we want to handle an arbitrary number of columns, let's
+        //  do this in a loop.
+        for (int xpos = colWidth; xpos < width; xpos += colWidth) {
+            canvas.drawLine(xpos, 0, xpos, height, cellBox);
         }
     }
 
