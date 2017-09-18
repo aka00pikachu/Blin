@@ -6,7 +6,7 @@ In Android Studio 2.3.3:
    - Repository URL: https://github.com/Panzarotti/EleeStuff.git
    - Parent Directory: (whatever you want; probably
      /home/.../AndroidStudioProjects)
-   - Directory Name: (whatever you want; probably Calculater)
+   - Directory Name: (whatever you want; probably EleeStuff)
 
 That should check the stuff out and start a Gradle build!  (I got a couple of
 errors about missing .iml files; I ignored them--I said to *not* remove the
