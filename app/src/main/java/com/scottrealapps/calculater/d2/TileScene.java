@@ -13,6 +13,7 @@ import android.view.View;
 import com.scottrealapps.calculater.R;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This manages all the objects we're looking at.  Warning, there's also an
@@ -129,7 +130,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     private int updateCount = 0;  //  the total number of updates; may roll.
 
     int columns = 4;
-    int speed = 0;
+    int speed = 5;
     int topVisibleRow = 0;
     int topVisibleRowOffset = 0;
 
@@ -142,6 +143,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     private Paint goodUnclickedCell = new Paint();
     private Paint goodClickedCell = new Paint();
     private Paint cellBox = new Paint();
+    private Random rand = new Random();
 
 
 //    //  We could have one Paint per Ball, or pass separate Paint objects into
@@ -241,11 +243,21 @@ public class TileScene implements Scene, View.OnTouchListener {
     public void update(int width, int height) {
         ++updateCount;
 
-        if ((topVisibleRowOffset + speed) > 0) {
-            //  That means we need to have a new topVisibleRow, and we need to
-            //  adjust topVisibleRowOffest back up above the top of the screen
+        topVisibleRowOffset += speed;
+        if (topVisibleRowOffset > 0) {
+            //  That means we need to switch to a new topVisibleRow, reset() it
+            //  with a random good-tile, and we need to adjust
+            //  topVisibleRowOffest back up above the top of the screen
             //  (making it negative).
-
+            if (topVisibleRow == 0) {
+                topVisibleRow = rows.size() - 1;
+            } else {
+                --topVisibleRow;
+            }
+            Row row = rows.get(topVisibleRow);
+            row.reset(rand.nextInt(row.cells.length));
+            topVisibleRowOffset -= row.height;
+            speed += 2;
         }
 
 
