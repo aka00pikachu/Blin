@@ -9,5 +9,7 @@
     <color name="goodClickedCellColor">#80ff80</color>
     <color name="goodUnclickedCellColor">#008000</color>
     <color name="badCellColor">#ffffff</color>
+    <color name="failedCellColor">#ff0000</color>
+    <color name="startCellColor">#ffff00</color>
 
 </resources>
