@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.scottrealapps.calculater.R;
 
@@ -153,6 +154,8 @@ public class TileScene implements Scene, View.OnTouchListener {
     }
 
 
+    //  Unfortunately, we need a Context for Toast.makeText().
+    private Context context;
 
     //  In case we're applying gravity etc. on one thread & rendering on another,
     //  we synchronize on this so that the scene isn't changing *while* we're
@@ -164,6 +167,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     int speed = 0;
     int topVisibleRow = 0;
     int topVisibleRowOffset = 0;
+    int score;
 
 //    private float gravity = 10f;
 //    private boolean openTopped = true;
@@ -193,6 +197,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     private ArrayList<Row> rows = new ArrayList<Row>();
 
     public TileScene(Context context, int columns) {
+        this.context = context;
         this.columns = columns;
 //        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
 //        Bitmap bm2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.lucifer1);
@@ -400,12 +405,18 @@ Log.d(LOGBIT, "onTouch(view, " + ev + ")");
                             if (cell.getPaint() == startCell) {
                                 //  it's the start cell!
                                 speed = 6;
+                                score = 0;
+                            } else{
+                                score++;
                             }
                             cell.clicked();
                             //  and increment the score?
 //Log.d(LOGBIT, "GOOD CLICK ROW " + currentRow + ", CELL " + cellNumber);
                         } else {
+                            //this is how we know the wrong tile was clicked
                             cell.setPaint(failedCell);
+                            Toast.makeText(context, "SCORE: " + score + ", speed " +
+                                    speed, Toast.LENGTH_LONG).show();
                             speed = 0;
 //throw new RuntimeException("FAIL");
                         }
