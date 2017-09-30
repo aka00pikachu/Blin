@@ -157,7 +157,7 @@ public class TileActivity extends AppCompatActivity {//implements CrimeScene.Sco
             view.setScene(new TileScene(this, 4));
             view.setupListeners();
             sceneUpdateThread = new SceneUpdateThread(view);
-            instructions = getResources().getString(R.string.instructions_slap);
+            instructions = getResources().getString(R.string.instructions_tile);
 //        } else if ((intent != null) && (intent.getBooleanExtra(INTENT_SHOOTY, false))) {
 //            setContentView(R.layout.activity_canvas3);
 //            Another2DView view = (Another2DView) (findViewById(R.id.myView));
