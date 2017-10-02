@@ -46,6 +46,7 @@
                   android:label="@string/action_tiles"
                   android:parentActivityName=".StartGameActivity"
                   android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
         <activity android:name=".GameOverActivity"
