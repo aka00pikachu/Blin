@@ -1,8 +1,6 @@
 package com.scottrealapps.calculater.d2;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,7 +10,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.scottrealapps.calculater.GameOverActivity;
 import com.scottrealapps.calculater.R;
+import com.scottrealapps.calculater.StartGameActivity;
+import com.scottrealapps.calculater.TileActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -154,8 +155,8 @@ public class TileScene implements Scene, View.OnTouchListener {
     }
 
 
-    //  Unfortunately, we need a Context for Toast.makeText().
-    private Context context;
+    //  Unfortunately, we need a TileActivity for startActivityForResult()
+    private TileActivity context;
 
     //  In case we're applying gravity etc. on one thread & rendering on another,
     //  we synchronize on this so that the scene isn't changing *while* we're
@@ -164,7 +165,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     private int updateCount = 0;  //  the total number of updates; may roll.
 
     int columns = 4;
-    int speed = 0;
+    int speed = 6;
     int topVisibleRow = 0;
     int topVisibleRowOffset = 0;
     int score;
@@ -183,7 +184,6 @@ public class TileScene implements Scene, View.OnTouchListener {
     private Paint goodUnclickedCell = new Paint();
     private Paint goodClickedCell = new Paint();
     private Paint cellBox = new Paint();
-    private Paint startCell = new Paint();
     private Random rand = new Random();
 
 
@@ -196,7 +196,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     //  ball in the list will be painted last, making it look like it's in front.
     private ArrayList<Row> rows = new ArrayList<Row>();
 
-    public TileScene(Context context, int columns) {
+    public TileScene(TileActivity context, int columns) {
         this.context = context;
         this.columns = columns;
 //        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
@@ -206,12 +206,10 @@ public class TileScene implements Scene, View.OnTouchListener {
         failedCell.setColor(context.getResources().getColor(R.color.failedCellColor));
         goodClickedCell.setColor(context.getResources().getColor(R.color.goodClickedCellColor));
         goodUnclickedCell.setColor(context.getResources().getColor(R.color.goodUnclickedCellColor));
-        startCell.setColor(context.getResources().getColor(R.color.startCellColor));
         badCell.setAlpha(255);
         failedCell.setAlpha(255);
         goodClickedCell.setAlpha(255);
         goodUnclickedCell.setAlpha(255);
-        startCell.setAlpha(255);
         cellBox.setStrokeWidth(2f);
         cellBox.setColor(Color.BLACK);
         cellBox.setAlpha(255);
@@ -263,8 +261,9 @@ public class TileScene implements Scene, View.OnTouchListener {
             //  this is garbage, but it'll initialize with a diagonal pattern
             rows.get(ii).reset(ii);
         }
-        //  Let's make the last cell in the last row a "start" cell.
-        rows.get(rows.size() - 2).cells[columns - 1].setPaint(startCell);
+        //  Let's make the last cell in the last row a bad cell, so that they
+        //  don't have to tap the last row when the game starts up.
+        rows.get(rows.size() - 2).cells[columns - 1].reset(false);
 
 //        int minD = (width < height) ? width : height;
 //        synchronized (sceneLock) {
@@ -324,9 +323,8 @@ public class TileScene implements Scene, View.OnTouchListener {
             if (rows.get(bottomVisibleRow).hasUnclickedGoodCells()) {
                 //  put the topVisibleRowOffset back where it was
                 topVisibleRowOffset -= speed;
-                //  ribbet!
-                speed = 0;
                 rows.get(bottomVisibleRow).setUnclickedGoodRowsFailed();
+                gameOver();
                 return;
             }
 
@@ -348,6 +346,15 @@ public class TileScene implements Scene, View.OnTouchListener {
 //                balls.get(ii).applyGravity(this);
 //            }
 //        }
+    }
+
+    private void gameOver() {
+        //  ribbet!
+        Intent intent = new Intent(context, GameOverActivity.class);
+        intent.putExtra(StartGameActivity.INTENT_SCORE, score);
+        intent.putExtra(StartGameActivity.INTENT_SPEED, speed);
+        context.startActivityForResult(intent, StartGameActivity.RESULT_GAME_DONE);
+        speed = 0;
     }
 
     @Override
@@ -401,23 +408,14 @@ Log.d(LOGBIT, "onTouch(view, " + ev + ")");
                         int cellNumber = (int)(touchX / (width / row.cells.length));
                         Cell cell = row.cells[cellNumber];
                         if (cell.okToClick()) {
-                            //  First, is this the start cell?
-                            if (cell.getPaint() == startCell) {
-                                //  it's the start cell!
-                                speed = 6;
-                                score = 0;
-                            } else{
-                                score++;
-                            }
+                            score++;
                             cell.clicked();
                             //  and increment the score?
 //Log.d(LOGBIT, "GOOD CLICK ROW " + currentRow + ", CELL " + cellNumber);
                         } else {
                             //this is how we know the wrong tile was clicked
                             cell.setPaint(failedCell);
-                            Toast.makeText(context, "SCORE: " + score + ", speed " +
-                                    speed, Toast.LENGTH_LONG).show();
-                            speed = 0;
+                            gameOver();
 //throw new RuntimeException("FAIL");
                         }
                         currentRowBottom = height + 1;  //  break out of while loop

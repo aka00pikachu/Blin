@@ -186,7 +186,7 @@ Log.d("Scott", "got MotionEvent " + me);
             return true;
         }
         if (id == R.id.action_tiles) {
-            Intent intent = new Intent(this, TileActivity.class);
+            Intent intent = new Intent(this, StartGameActivity.class);
             startActivity(intent);
             return true;
         }

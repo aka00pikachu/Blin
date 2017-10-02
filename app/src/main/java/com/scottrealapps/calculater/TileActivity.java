@@ -150,14 +150,14 @@ public class TileActivity extends AppCompatActivity {//implements CrimeScene.Sco
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Intent intent = getIntent();
-        String instructions = null;
+//        String instructions = null;
 //        if ((intent != null) && (intent.getBooleanExtra(INTENT_DOUBLE_BUFFER, false))) {
             setContentView(R.layout.activity_canvas2);
             Another2DView view = (Another2DView) (findViewById(R.id.myView));
             view.setScene(new TileScene(this, 4));
             view.setupListeners();
             sceneUpdateThread = new SceneUpdateThread(view);
-            instructions = getResources().getString(R.string.instructions_tile);
+//            instructions = getResources().getString(R.string.instructions_tile);
 //        } else if ((intent != null) && (intent.getBooleanExtra(INTENT_SHOOTY, false))) {
 //            setContentView(R.layout.activity_canvas3);
 //            Another2DView view = (Another2DView) (findViewById(R.id.myView));
@@ -175,9 +175,9 @@ public class TileActivity extends AppCompatActivity {//implements CrimeScene.Sco
 //            animationTimer.handleMessage(null);  //  start the animation running
 //            instructions = getResources().getString(R.string.instructions_slap);
 //        }
-        if (instructions != null) {
-            Toast.makeText(this, instructions, Toast.LENGTH_LONG).show();
-        }
+//        if (instructions != null) {
+//            Toast.makeText(this, instructions, Toast.LENGTH_LONG).show();
+//        }
     }
 
 //    @Override
@@ -185,6 +185,17 @@ public class TileActivity extends AppCompatActivity {//implements CrimeScene.Sco
 //        if (tileScene != null) tileScene.onStop();
 //        super.onStop();
 //    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == StartGameActivity.RESULT_GAME_DONE) {
+            if (data != null) setResult(resultCode, data);
+            finish();
+        } else {
+            //  it's not something we know about, so pass it on to the superclass
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     @Override
     public void onBackPressed() {

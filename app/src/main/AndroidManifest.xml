@@ -38,11 +38,17 @@
                   android:screenOrientation="portrait"
             >
         </activity>
+        <activity android:name=".StartGameActivity"
+                  android:parentActivityName=".MainActivity">
+        </activity>
         <activity android:name=".TileActivity"
                   android:label="@string/action_tiles"
-                  android:parentActivityName=".MainActivity"
+                  android:parentActivityName=".StartGameActivity"
                   android:screenOrientation="portrait"
             >
+        </activity>
+        <activity android:name=".GameOverActivity"
+                  android:parentActivityName=".TileActivity">
         </activity>
     </application>
 
