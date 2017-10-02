@@ -3,6 +3,7 @@ package com.scottrealapps.calculater;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,5 +38,19 @@ scoreText.setText(score + ", speed: " + speed);
 message.setText("You are great!");
 highScores.setText("(High scores would go here)");
 
+    }
+
+    /**
+     * This is overridden to check for the home button getting hit, and to call
+     * finish() in that case.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }
