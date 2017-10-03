@@ -146,9 +146,9 @@ Log.d("Scott", "got MotionEvent " + me);
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+        //    return true;
+        //}
         if (id == R.id.action_canvas) {
             //  There are a couple of ways to launch a child Activity; if you
             //  want to get back the user's input etc. from the child Activity,
@@ -185,11 +185,11 @@ Log.d("Scott", "got MotionEvent " + me);
             startActivity(intent);
             return true;
         }
-        if (id == R.id.action_tiles) {
-            Intent intent = new Intent(this, StartGameActivity.class);
-            startActivity(intent);
-            return true;
-        }
+        //if (id == R.id.action_tiles) {
+        //    Intent intent = new Intent(this, StartGameActivity.class);
+        //    startActivity(intent);
+        //    return true;
+        //}
 
         return super.onOptionsItemSelected(item);
     }
