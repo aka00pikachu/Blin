@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--  The example we copied from also had an android:dependency attribute -->
+    <ListPreference
+        android:key="pref_speedType"
+        android:title="@string/pref_speedType"
+        android:dialogTitle="@string/pref_speedType"
+        android:entries="@array/pref_speedType_titles"
+        android:entryValues="@array/pref_speedType_values"
+        android:defaultValue="@string/pref_speedType_default" />
+
+</PreferenceScreen>

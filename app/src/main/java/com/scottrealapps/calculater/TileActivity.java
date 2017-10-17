@@ -22,6 +22,8 @@ import java.util.ArrayList;
  */
 public class TileActivity extends AppCompatActivity {//implements CrimeScene.ScoreListener {
 
+    public static final String INTENT_SPEED_TYPE = "speedType";
+
     private TileScene tileScene = null;
 //    private TextView scoreStuff = null;
     private SceneUpdateThread sceneUpdateThread = null;
@@ -74,12 +76,24 @@ public class TileActivity extends AppCompatActivity {//implements CrimeScene.Sco
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Intent intent = getIntent();
+
+        //  seems like we're hard-coding a lot of the stuff in strings.xml here...
+        TileScene.SpeedType speedType = TileScene.SpeedType.Ascending;
+        Intent intent = getIntent();
+        String ts = (intent != null) ? intent.getStringExtra(INTENT_SPEED_TYPE) : null;
+        if (ts != null) {
+            if (ts.equals("oscillating")) {
+                speedType = TileScene.SpeedType.Oscillating;
+            } else if (ts.equals("boomerang")) {
+                speedType = TileScene.SpeedType.Boomerang;
+            }
+        }
+
 //        String instructions = null;
 //        if ((intent != null) && (intent.getBooleanExtra(INTENT_DOUBLE_BUFFER, false))) {
             setContentView(R.layout.activity_canvas2);
             Another2DView view = (Another2DView) (findViewById(R.id.myView));
-            view.setScene(new TileScene(this, 4));
+            view.setScene(new TileScene(this, 4, speedType));
             view.setupListeners();
             sceneUpdateThread = new SceneUpdateThread(view);
 //            instructions = getResources().getString(R.string.instructions_tile);

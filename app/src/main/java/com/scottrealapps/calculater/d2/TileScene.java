@@ -14,6 +14,9 @@ import com.scottrealapps.calculater.GameOverActivity;
 import com.scottrealapps.calculater.R;
 import com.scottrealapps.calculater.StartGameActivity;
 import com.scottrealapps.calculater.TileActivity;
+import com.scottrealapps.calculater.util.AscendingSpeed;
+import com.scottrealapps.calculater.util.OscillatingSpeed;
+import com.scottrealapps.calculater.util.SpeedAdjuster;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,6 +29,13 @@ import java.util.Random;
 public class TileScene implements Scene, View.OnTouchListener {
 
     private static final String LOGBIT = "ELEE!";
+
+    public enum SpeedType {
+        Ascending,
+        Oscillating,
+        Boomerang
+    };
+
     /**
      * This is one rectangle on the screen.
      */
@@ -166,6 +176,7 @@ public class TileScene implements Scene, View.OnTouchListener {
 
     int columns = 4;
     int speed = 6;
+    SpeedAdjuster speedAdjuster;
     int topVisibleRow = 0;
     int topVisibleRowOffset = 0;
     int score;
@@ -196,7 +207,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     //  ball in the list will be painted last, making it look like it's in front.
     private ArrayList<Row> rows = new ArrayList<Row>();
 
-    public TileScene(TileActivity context, int columns) {
+    public TileScene(TileActivity context, int columns, SpeedType speedType) {
         this.context = context;
         this.columns = columns;
 //        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
@@ -214,7 +225,11 @@ public class TileScene implements Scene, View.OnTouchListener {
         cellBox.setColor(Color.BLACK);
         cellBox.setAlpha(255);
 
-
+        if (speedType.equals(SpeedType.Oscillating)) {
+            speedAdjuster = new OscillatingSpeed(speed);
+        } else {
+            speedAdjuster = new AscendingSpeed();
+        }
 
 //        balls.add(new ImageBall(bm2, ballPaint));
 ////        balls.add(new Ball(ballPaint));
@@ -300,7 +315,7 @@ public class TileScene implements Scene, View.OnTouchListener {
             currentUpdateSecond = nowSecond;
             updatesThisSecond = 1;  //  reset it
             if (speed != 0) {  //  if it's 0. we haven't started moving yet
-                speed += 1;
+                speed = speedAdjuster.adjustSpeed(speed);
             }
         } else {
             ++updatesThisSecond;
@@ -353,6 +368,8 @@ public class TileScene implements Scene, View.OnTouchListener {
         Intent intent = new Intent(context, GameOverActivity.class);
         intent.putExtra(StartGameActivity.INTENT_SCORE, score);
         intent.putExtra(StartGameActivity.INTENT_SPEED, speed);
+//XXX this needs to be fixed; we need to send the speed type.
+//        intent.putExtra(StartGameActivity.INTENT_SPEED_TYPE, speedType);
         context.startActivityForResult(intent, StartGameActivity.RESULT_GAME_DONE);
         speed = 0;
     }

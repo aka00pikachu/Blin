@@ -1,6 +1,8 @@
 package com.scottrealapps.calculater;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +20,9 @@ public class StartGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
+
+        //  from https://developer.android.com/guide/topics/ui/settings.html#Defaults
+        PreferenceManager.setDefaultValues(this, R.xml.tile_preferences, false);
     }
 
     @Override
@@ -86,7 +91,8 @@ public class StartGameActivity extends AppCompatActivity {
      * Called when our Settings button is clicked on; currently does nothing.
      */
     public void openSettings(View view) {
-Toast.makeText(this, "Open settings!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, TileSettingsActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -94,7 +100,12 @@ Toast.makeText(this, "Open settings!", Toast.LENGTH_SHORT).show();
      * TileActivity.
      */
     public void startGame(View view) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String speedType = prefs.getString(TileSettingsActivity.KEY_PREF_SPEED_TYPE,
+                getString(R.string.pref_speedType_default));
+
         Intent intent = new Intent(this, TileActivity.class);
+        intent.putExtra(TileActivity.INTENT_SPEED_TYPE, speedType);
         startActivityForResult(intent, RESULT_GAME_DONE);
     }
 

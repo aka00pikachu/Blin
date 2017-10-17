@@ -60,6 +60,17 @@
                   android:parentActivityName=".TileActivity"
                   android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".TileSettingsActivity"
+                  android:label="@string/title_activity_tile_settings"
+                  android:parentActivityName=".StartGameActivity"
+            >
+            <!--
+            Parent activity meta-data to support 4.0 and lower, from
+            https://stackoverflow.com/questions/33940882/android-fragment-go-back-does-doesnt-work
+            -->
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".StartGameActivity" />
+        </activity>
     </application>
 
 </manifest>
