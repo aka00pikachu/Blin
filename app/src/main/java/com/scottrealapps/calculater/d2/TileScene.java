@@ -3,12 +3,9 @@ package com.scottrealapps.calculater.d2;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.scottrealapps.calculater.GameOverActivity;
 import com.scottrealapps.calculater.R;
@@ -38,135 +35,6 @@ public class TileScene implements Scene, View.OnTouchListener {
         Constant
     };
 
-    /**
-     * This is one rectangle on the screen.
-     */
-    private class Cell {
-        // True if this is supposed to be clicked on, false if it's not.
-        boolean correct;
-        boolean hasBeenClicked;
-        private Paint paint;
-
-        /**
-         * Call to reuse/reinitialize a Cell.
-         */
-        public void reset(boolean correct) {
-            this.correct = correct;
-            hasBeenClicked = false;
-            if (correct) {
-                paint = goodUnclickedCell;
-            } else {
-                paint = badCell;
-            }
-        }
-
-        /**
-         * Call this when the cell is clicked on, unless it's not correct.
-         */
-        public void clicked() {
-            if (!correct) return;
-            if (hasBeenClicked == false) {
-                paint = goodClickedCell;
-//  change our color or image
-                hasBeenClicked = true;
-            }
-        }
-
-        /**
-         * Returns true if this cell is OK to click on; false if not.
-         */
-        public boolean okToClick() {
-            return correct;
-        }
-
-        public boolean hasBeenClicked() {
-            return hasBeenClicked;
-        }
-
-        /**
-         * @param newPaint must not be null.
-         */
-        public void setPaint(Paint newPaint) {
-            paint = newPaint;
-        }
-        public Paint getPaint() {
-            return paint;
-        }
-    }
-
-    private class Row {
-        public Row(int columns) {
-            cells = new Cell[columns];
-            for (int column = 0; column < columns; ++column) {
-                cells[column] = new Cell();
-            }
-        }
-        int height;  //  in pixels
-        Cell[] cells;  //  this is our list of cells
-
-        public boolean hasUnclickedGoodCells() {
-            for (int ii = 0; ii < cells.length; ++ii) {
-                if (cells[ii].okToClick() && !cells[ii].hasBeenClicked()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        public void setUnclickedGoodRowsFailed() {
-            for (int ii = 0; ii < cells.length; ++ii) {
-                if (cells[ii].okToClick() && !cells[ii].hasBeenClicked()) {
-                    cells[ii].setPaint(failedCell);
-                }
-            }
-        }
-
-        /**
-         * This is how you set the height.  Here's an important note you really
-         * need to know.
-         *
-         * @param newHeight must be greater than zero.
-         */
-        public void setHeight(int newHeight) {
-            height = newHeight;
-        }
-
-        /**
-         * Call this to reset/reinitialize a row.
-         *
-         * @param goodCell which cell should be marked as correct. -1 if none
-         *                 are correct.
-         */
-        public void reset(int goodCell) {
-            for (int column = 0; column < cells.length; ++column) {
-                cells[column].reset((column == goodCell) ? true : false);
-            }
-        }
-
-        public void draw(Canvas canvas, int currentRowTop, int colWidth) {
-            Rect youGotRect = new Rect(0, (currentRowTop < 0) ? 0 : currentRowTop, colWidth, currentRowTop + height);
-            for (int ii = 0; ii < cells.length; ++ii) {
-//set(int left, int top, int right, int bottom)
-                //  now we want to draw a rectangle!
-                canvas.drawRect(youGotRect, cells[ii].paint);
-                youGotRect.left += colWidth;
-                youGotRect.right += colWidth;
-            }
-            //  now draw the top line
-            if (currentRowTop >= 0) {
-                canvas.drawLine(0, currentRowTop, colWidth * cells.length, currentRowTop, cellBox);
-            }
-        }
-////            int ballColor = 0xff000000;
-////            ballColor |= ((128 + (updateCount % 128)) << 16);
-////ballPaint.setColor(ballColor);
-//
-//        //  draw them back-to-front.
-//            for (int ii = balls.size() - 1; ii >= 0; --ii) {
-//            balls.get(ii).draw(canvas);
-//        }
-    }
-
-
     //  Unfortunately, we need a TileActivity for startActivityForResult()
     private TileActivity context;
 
@@ -192,12 +60,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     private int updatesThisSecond = 0;
     private int currentUpdateSecond = 0;
 
-    private Paint badCell = new Paint();
-    //  bad click, or good cell which is escaping off the bottom
-    private Paint failedCell = new Paint();
-    private Paint goodUnclickedCell = new Paint();
-    private Paint goodClickedCell = new Paint();
-    private Paint cellBox = new Paint();
+    private CellTheme theme = new CellTheme();
     private Random rand = new Random();
 
 
@@ -217,17 +80,17 @@ public class TileScene implements Scene, View.OnTouchListener {
 //        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
 //        Bitmap bm2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.lucifer1);
 //        Bitmap bm3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.lucifer2);
-        badCell.setColor(context.getResources().getColor(R.color.badCellColor));
-        failedCell.setColor(context.getResources().getColor(R.color.failedCellColor));
-        goodClickedCell.setColor(context.getResources().getColor(R.color.goodClickedCellColor));
-        goodUnclickedCell.setColor(context.getResources().getColor(R.color.goodUnclickedCellColor));
-        badCell.setAlpha(255);
-        failedCell.setAlpha(255);
-        goodClickedCell.setAlpha(255);
-        goodUnclickedCell.setAlpha(255);
-        cellBox.setStrokeWidth(2f);
-        cellBox.setColor(Color.BLACK);
-        cellBox.setAlpha(255);
+        theme.badCell.setColor(context.getResources().getColor(R.color.badCellColor));
+        theme.failedCell.setColor(context.getResources().getColor(R.color.failedCellColor));
+        theme.goodClickedCell.setColor(context.getResources().getColor(R.color.goodClickedCellColor));
+        theme.goodUnclickedCell.setColor(context.getResources().getColor(R.color.goodUnclickedCellColor));
+        theme.badCell.setAlpha(255);
+        theme.failedCell.setAlpha(255);
+        theme.goodClickedCell.setAlpha(255);
+        theme.goodUnclickedCell.setAlpha(255);
+        theme.cellBox.setStrokeWidth(2f);
+        theme.cellBox.setColor(Color.BLACK);
+        theme.cellBox.setAlpha(255);
 
         if (speedType.equals(SpeedType.Oscillating)) {
             speedAdjuster = new OscillatingSpeed(speed * 2);
@@ -278,14 +141,14 @@ public class TileScene implements Scene, View.OnTouchListener {
         this.width = width;
         rows = new ArrayList<Row>(5);
         for (int ii = 0; ii < 5; ++ii) {
-            rows.add(new Row(columns));
+            rows.add(new Row(columns, theme));
             rows.get(ii).setHeight(height / 4);
             //  this is garbage, but it'll initialize with a diagonal pattern
             rows.get(ii).reset(ii);
         }
         //  Let's make the last cell in the last row a bad cell, so that they
         //  don't have to tap the last row when the game starts up.
-        rows.get(rows.size() - 2).cells[columns - 1].reset(false);
+        rows.get(rows.size() - 2).getCell(columns - 1).reset(false);
 
 //        int minD = (width < height) ? width : height;
 //        synchronized (sceneLock) {
@@ -356,8 +219,8 @@ public class TileScene implements Scene, View.OnTouchListener {
                 --topVisibleRow;
             }
             Row row = rows.get(topVisibleRow);
-            row.reset(rand.nextInt(row.cells.length));
-            topVisibleRowOffset -= row.height;
+            row.reset(rand.nextInt(row.getCellCount()));
+            topVisibleRowOffset -= row.getHeight();
         }
 
 
@@ -389,14 +252,14 @@ public class TileScene implements Scene, View.OnTouchListener {
             for (int ii = 0; ii < rows.size(); ++ii) {
                 Row row = rows.get((ii + topVisibleRow) % rows.size());
                 row.draw(canvas, currentRowTop, colWidth);
-                currentRowTop += row.height;
+                currentRowTop += row.getHeight();
             }
         }
         //Now draw the vertical lines
         //  because we want to handle an arbitrary number of columns, let's
         //  do this in a loop.
         for (int xpos = colWidth; xpos < width; xpos += colWidth) {
-            canvas.drawLine(xpos, 0, xpos, height, cellBox);
+            canvas.drawLine(xpos, 0, xpos, height, theme.cellBox);
         }
     }
 
@@ -427,12 +290,12 @@ Log.d(LOGBIT, "onTouch(view, " + ev + ")");
                 int currentRowBottom = topVisibleRowOffset;
                 while (currentRowBottom <= height) {
                     Row row = rows.get(currentRow);
-                    currentRowBottom += row.height;
+                    currentRowBottom += row.getHeight();
                     if (touchY <= currentRowBottom) {
                         //  this is our row!
                         //  Find out the cell number.
-                        int cellNumber = (int)(touchX / (width / row.cells.length));
-                        Cell cell = row.cells[cellNumber];
+                        int cellNumber = (int)(touchX / (width / row.getCellCount()));
+                        Cell cell = row.getCell(cellNumber);
                         if (cell.okToClick()) {
                             score++;
                             cell.clicked();
@@ -449,7 +312,7 @@ Log.d(LOGBIT, "onTouch(view, " + ev + ")");
                             }
                         } else {
                             //this is how we know the wrong tile was clicked
-                            cell.setPaint(failedCell);
+                            cell.setPaint(theme.failedCell);
                             gameOver();
 //throw new RuntimeException("FAIL");
                         }
