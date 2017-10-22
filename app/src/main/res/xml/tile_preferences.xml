@@ -16,4 +16,10 @@
         android:dialogTitle="@string/pref_playerControlSpeed"
         android:defaultValue="@string/pref_playerControlSpeed_default" />
 
+    <CheckBoxPreference
+        android:key="pref_timeTiles"
+        android:title="@string/pref_timeTiles"
+        android:dialogTitle="@string/pref_timeTiles"
+        android:defaultValue="false" />
+
 </PreferenceScreen>

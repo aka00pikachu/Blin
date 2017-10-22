@@ -105,10 +105,12 @@ public class StartGameActivity extends AppCompatActivity {
                 getString(R.string.pref_speedType_default));
         boolean playerControlSpeed = prefs.getBoolean(TileSettingsActivity.KEY_PREF_PLAYER_CONTROL_SPEED,
                 "true".equals(getString(R.string.pref_playerControlSpeed_default)));
+        boolean timeTiles = prefs.getBoolean("pref_timeTiles", false);
 
         Intent intent = new Intent(this, TileActivity.class);
         intent.putExtra(TileActivity.INTENT_SPEED_TYPE, speedType);
         intent.putExtra(TileActivity.INTENT_PLAYER_CONTROL_SPEED, playerControlSpeed);
+        intent.putExtra(TileActivity.INTENT_TIME_TILES, timeTiles);
         startActivityForResult(intent, RESULT_GAME_DONE);
     }
 
