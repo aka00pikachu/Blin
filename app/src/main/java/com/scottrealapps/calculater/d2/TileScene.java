@@ -226,7 +226,7 @@ public class TileScene implements Scene, View.OnTouchListener {
         cellBox.setAlpha(255);
 
         if (speedType.equals(SpeedType.Oscillating)) {
-            speedAdjuster = new OscillatingSpeed(speed);
+            speedAdjuster = new OscillatingSpeed(speed * 2);
         } else {
             speedAdjuster = new AscendingSpeed();
         }
