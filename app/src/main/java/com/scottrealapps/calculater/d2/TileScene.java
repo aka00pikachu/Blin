@@ -175,7 +175,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     private int updateCount = 0;  //  the total number of updates; may roll.
 
     int columns = 4;
-    int speed = 6;
+    int speed = 8;
     SpeedAdjuster speedAdjuster;
     int topVisibleRow = 0;
     int topVisibleRowOffset = 0;
