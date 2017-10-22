@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class TileActivity extends AppCompatActivity {//implements CrimeScene.ScoreListener {
 
     public static final String INTENT_SPEED_TYPE = "speedType";
+    public static final String INTENT_PLAYER_CONTROL_SPEED = "playerControlSpeed";
 
     private TileScene tileScene = null;
 //    private TextView scoreStuff = null;
@@ -86,14 +87,20 @@ public class TileActivity extends AppCompatActivity {//implements CrimeScene.Sco
                 speedType = TileScene.SpeedType.Oscillating;
             } else if (ts.equals("boomerang")) {
                 speedType = TileScene.SpeedType.Boomerang;
+            } else if (ts.equals("constant")) {
+                speedType = TileScene.SpeedType.Constant;
             }
+        }
+        boolean playerControlSpeed = false;
+        if (intent != null) {
+            playerControlSpeed = intent.getBooleanExtra(INTENT_PLAYER_CONTROL_SPEED, playerControlSpeed);
         }
 
 //        String instructions = null;
 //        if ((intent != null) && (intent.getBooleanExtra(INTENT_DOUBLE_BUFFER, false))) {
             setContentView(R.layout.activity_canvas2);
             Another2DView view = (Another2DView) (findViewById(R.id.myView));
-            view.setScene(new TileScene(this, 4, speedType));
+            view.setScene(new TileScene(this, 4, speedType, playerControlSpeed));
             view.setupListeners();
             sceneUpdateThread = new SceneUpdateThread(view);
 //            instructions = getResources().getString(R.string.instructions_tile);

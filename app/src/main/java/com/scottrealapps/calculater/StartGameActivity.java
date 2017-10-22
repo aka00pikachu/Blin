@@ -103,9 +103,12 @@ public class StartGameActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String speedType = prefs.getString(TileSettingsActivity.KEY_PREF_SPEED_TYPE,
                 getString(R.string.pref_speedType_default));
+        boolean playerControlSpeed = prefs.getBoolean(TileSettingsActivity.KEY_PREF_PLAYER_CONTROL_SPEED,
+                "true".equals(getString(R.string.pref_playerControlSpeed_default)));
 
         Intent intent = new Intent(this, TileActivity.class);
         intent.putExtra(TileActivity.INTENT_SPEED_TYPE, speedType);
+        intent.putExtra(TileActivity.INTENT_PLAYER_CONTROL_SPEED, playerControlSpeed);
         startActivityForResult(intent, RESULT_GAME_DONE);
     }
 

@@ -10,4 +10,10 @@
         android:entryValues="@array/pref_speedType_values"
         android:defaultValue="@string/pref_speedType_default" />
 
+    <CheckBoxPreference
+        android:key="pref_playerControlSpeed"
+        android:title="@string/pref_playerControlSpeed"
+        android:dialogTitle="@string/pref_playerControlSpeed"
+        android:defaultValue="@string/pref_playerControlSpeed_default" />
+
 </PreferenceScreen>

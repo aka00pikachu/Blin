@@ -15,6 +15,7 @@ import com.scottrealapps.calculater.R;
 import com.scottrealapps.calculater.StartGameActivity;
 import com.scottrealapps.calculater.TileActivity;
 import com.scottrealapps.calculater.util.AscendingSpeed;
+import com.scottrealapps.calculater.util.ConstantSpeed;
 import com.scottrealapps.calculater.util.OscillatingSpeed;
 import com.scottrealapps.calculater.util.SpeedAdjuster;
 
@@ -33,7 +34,8 @@ public class TileScene implements Scene, View.OnTouchListener {
     public enum SpeedType {
         Ascending,
         Oscillating,
-        Boomerang
+        Boomerang,
+        Constant
     };
 
     /**
@@ -177,6 +179,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     int columns = 4;
     int speed = 8;
     SpeedAdjuster speedAdjuster;
+    boolean playerControlSpeed;
     int topVisibleRow = 0;
     int topVisibleRowOffset = 0;
     int score;
@@ -207,7 +210,8 @@ public class TileScene implements Scene, View.OnTouchListener {
     //  ball in the list will be painted last, making it look like it's in front.
     private ArrayList<Row> rows = new ArrayList<Row>();
 
-    public TileScene(TileActivity context, int columns, SpeedType speedType) {
+    public TileScene(TileActivity context, int columns, SpeedType speedType,
+                     boolean playerControlSpeed) {
         this.context = context;
         this.columns = columns;
 //        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
@@ -227,9 +231,12 @@ public class TileScene implements Scene, View.OnTouchListener {
 
         if (speedType.equals(SpeedType.Oscillating)) {
             speedAdjuster = new OscillatingSpeed(speed * 2);
+        } else if (speedType.equals(SpeedType.Constant)) {
+            speedAdjuster = new ConstantSpeed();
         } else {
             speedAdjuster = new AscendingSpeed();
         }
+        this.playerControlSpeed = playerControlSpeed;
 
 //        balls.add(new ImageBall(bm2, ballPaint));
 ////        balls.add(new Ball(ballPaint));
@@ -409,6 +416,8 @@ Log.d(LOGBIT, "onTouch(view, " + ev + ")");
             //  - figure out what cell was under that point
             //  - decide whether it's good or bad
             //  - "do something"
+            int speedUpBoundary = height / 2;
+            int slowDownBoundary = height * 3 / 4;
             for (int pointer = 0; pointer < ev.getPointerCount(); ++pointer) {
                 float touchX = ev.getX(pointer);
                 float touchY = ev.getY(pointer);
@@ -429,6 +438,15 @@ Log.d(LOGBIT, "onTouch(view, " + ev + ")");
                             cell.clicked();
                             //  and increment the score?
 //Log.d(LOGBIT, "GOOD CLICK ROW " + currentRow + ", CELL " + cellNumber);
+                            //  now check to see whether we should speed up or
+                            //  slow down.
+                            if (playerControlSpeed) {
+                                if (touchY < speedUpBoundary) {
+                                    speed ++;
+                                } else if (touchY > slowDownBoundary) {
+                                    speed --;
+                                }
+                            }
                         } else {
                             //this is how we know the wrong tile was clicked
                             cell.setPaint(failedCell);

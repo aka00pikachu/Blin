@@ -33,12 +33,17 @@
         <item>Increasing</item>
         <item>Oscillating</item>
         <item>Boomerang</item>
+        <item>None</item>
     </string-array>
     <string-array name="pref_speedType_values">
         <item>increasing</item>
         <item>oscillating</item>
         <item>boomerang</item>
+        <item>constant</item>
     </string-array>
     <string name="pref_speedType_default">increasing</string>
+
+    <string name="pref_playerControlSpeed">Player controls speed</string>
+    <string name="pref_playerControlSpeed_default">false</string>
 
 </resources>
