@@ -2,24 +2,38 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--  The example we copied from also had an android:dependency attribute -->
-    <ListPreference
-        android:key="pref_speedType"
-        android:title="@string/pref_speedType"
-        android:dialogTitle="@string/pref_speedType"
-        android:entries="@array/pref_speedType_titles"
-        android:entryValues="@array/pref_speedType_values"
-        android:defaultValue="@string/pref_speedType_default" />
-
-    <CheckBoxPreference
-        android:key="pref_playerControlSpeed"
-        android:title="@string/pref_playerControlSpeed"
-        android:dialogTitle="@string/pref_playerControlSpeed"
-        android:defaultValue="@string/pref_playerControlSpeed_default" />
-
     <CheckBoxPreference
         android:key="pref_timeTiles"
         android:title="@string/pref_timeTiles"
         android:dialogTitle="@string/pref_timeTiles"
         android:defaultValue="false" />
+
+    <PreferenceCategory android:title="@string/pref_timed"
+                        android:key="pref_timed">
+        <ListPreference
+            android:key="pref_timeAllowed"
+            android:title="@string/pref_timeAllowed"
+            android:dialogTitle="@string/pref_timeAllowed"
+            android:entries="@array/pref_timeAllowed_titles"
+            android:entryValues="@array/pref_timeAllowed_values"
+            android:defaultValue="@string/pref_timeAllowed_default" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_untimed"
+                        android:key="pref_untimed">
+        <ListPreference
+            android:key="pref_speedType"
+            android:title="@string/pref_speedType"
+            android:dialogTitle="@string/pref_speedType"
+            android:entries="@array/pref_speedType_titles"
+            android:entryValues="@array/pref_speedType_values"
+            android:defaultValue="@string/pref_speedType_default" />
+
+        <CheckBoxPreference
+            android:key="pref_playerControlSpeed"
+            android:title="@string/pref_playerControlSpeed"
+            android:dialogTitle="@string/pref_playerControlSpeed"
+            android:defaultValue="@string/pref_playerControlSpeed_default" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

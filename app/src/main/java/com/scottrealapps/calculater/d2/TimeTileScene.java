@@ -3,6 +3,7 @@ package com.scottrealapps.calculater.d2;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.scottrealapps.calculater.R;
 import com.scottrealapps.calculater.StartGameActivity;
 import com.scottrealapps.calculater.TileActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -39,6 +41,8 @@ public class TimeTileScene implements Scene, View.OnTouchListener {
     private Integer sceneLock = new Integer(666);
     private int updateCount = 0;  //  the total number of updates; may roll.
 
+    int allowedTime;  //  seconds
+    long startTime = 0;  //  we'll set this the first time a tile is tapped on
     long timeRemaining;  //  milliseconds
     int columns = 4;
     int speed = 20;  //  the speed at which a row collapses.
@@ -54,12 +58,15 @@ public class TimeTileScene implements Scene, View.OnTouchListener {
 
     private CellTheme theme = new CellTheme();
     private Random rand = new Random();
+    private DecimalFormat timeRemainingFormat = new DecimalFormat("0.0");
 
     private ArrayList<ShrinkyRow> rows = new ArrayList<>();
 
-    public TimeTileScene(TileActivity context, int columns) {
+    public TimeTileScene(TileActivity context, int columns, int allowedTime) {
         this.context = context;
         this.columns = columns;
+        this.allowedTime = allowedTime;
+        timeRemaining = allowedTime * 1000;
 //        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
 //        Bitmap bm2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.lucifer1);
 //        Bitmap bm3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.lucifer2);
@@ -74,6 +81,22 @@ public class TimeTileScene implements Scene, View.OnTouchListener {
         theme.cellBox.setStrokeWidth(2f);
         theme.cellBox.setColor(Color.BLACK);
         theme.cellBox.setAlpha(255);
+        theme.timeRemaining.setTypeface(Typeface.DEFAULT_BOLD);
+//        theme.timeRemaining.setTextAlign(Align.);
+        theme.timeRemaining.setColor(Color.GRAY);
+        theme.timeRemaining.setAlpha(127);
+        theme.timeRemaining.setAntiAlias(true);
+        theme.timeRemaining.setTextSize(200);
+    }
+
+    /**
+     * If this is false, the user is just sitting there staring at the screen.
+     */
+    public boolean isGameStarted() {
+        return startTime != 0L;
+    }
+    public boolean isGameOver() {
+        return timeRemaining <= 0L;
     }
 
     @Override
@@ -151,6 +174,18 @@ public class TimeTileScene implements Scene, View.OnTouchListener {
             ++updatesThisSecond;
         }
 
+        //  Is the game over?
+        if (isGameOver() || (!isGameStarted())) {
+            return;
+        }
+
+        timeRemaining = (startTime + (allowedTime * 1000)) - now;
+//Log.d("ELEE", "" + timeRemaining + "ms remaining!");
+        if (isGameOver()) {
+            gameOver();
+            return;
+        }
+
         //  This is the amount by which we're moving the current row down the
         //  screen.  It will be 0 until we hit a row which is shrinking; at that
         //  point, it will increase by "speed", and will stay that way until we
@@ -186,6 +221,7 @@ public class TimeTileScene implements Scene, View.OnTouchListener {
     }
 
     private void gameOver() {
+        timeRemaining = 0;
         //  ribbet!
         Intent intent = new Intent(context, GameOverActivity.class);
         intent.putExtra(StartGameActivity.INTENT_SCORE, score);
@@ -213,6 +249,12 @@ public class TimeTileScene implements Scene, View.OnTouchListener {
         for (int xpos = colWidth; xpos < width; xpos += colWidth) {
             canvas.drawLine(xpos, 0, xpos, height, theme.cellBox);
         }
+
+        //  Draw the time remaining
+        float sr = timeRemaining / 1000.0f;
+        String ts = timeRemainingFormat.format(sr);
+//Log.d("ELEE", "timeRemaining " + timeRemaining + ", ts " + ts);
+        canvas.drawText(ts, 20, theme.timeRemaining.getTextSize() + 20, theme.timeRemaining);
     }
 
 //    private Ball touchingBall = null;
@@ -250,6 +292,10 @@ Log.d(LOGBIT, "onTouch(view, " + ev + ")");
                             cell.clicked();
                             row.shrinking = true;
                             //  and increment the score?
+                            //  If the clock isn't running... start it!
+                            if (startTime == 0) {
+                                startTime = System.currentTimeMillis();
+                            }
                         } else {
                             //this is how we know the wrong tile was clicked
                             cell.setPaint(theme.failedCell);

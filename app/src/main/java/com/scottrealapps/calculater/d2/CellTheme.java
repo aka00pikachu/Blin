@@ -17,4 +17,8 @@ public class CellTheme {
      * The lines around the outside of cells.
      */
     public Paint cellBox = new Paint();
+    /**
+     * The text showing how much time is remaining
+     */
+    public Paint timeRemaining = new Paint();
 }

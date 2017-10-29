@@ -26,6 +26,7 @@ public class TileActivity extends AppCompatActivity {//implements CrimeScene.Sco
     public static final String INTENT_SPEED_TYPE = "speedType";
     public static final String INTENT_PLAYER_CONTROL_SPEED = "playerControlSpeed";
     public static final String INTENT_TIME_TILES = "timeTiles";
+    public static final String INTENT_TIME_ALLOWED = "timeAllowed";
 
     private TileScene tileScene = null;
 //    private TextView scoreStuff = null;
@@ -102,12 +103,14 @@ public class TileActivity extends AppCompatActivity {//implements CrimeScene.Sco
             timeTiles = intent.getBooleanExtra(INTENT_TIME_TILES, timeTiles);
         }
 
+        int allowedTime = (intent != null) ? intent.getIntExtra(INTENT_TIME_ALLOWED, 20) : 20;
+
 //        String instructions = null;
 //        if ((intent != null) && (intent.getBooleanExtra(INTENT_DOUBLE_BUFFER, false))) {
             setContentView(R.layout.activity_canvas2);
             Another2DView view = (Another2DView) (findViewById(R.id.myView));
             if (timeTiles) {
-                view.setScene(new TimeTileScene(this, 4));
+                view.setScene(new TimeTileScene(this, 4, allowedTime));
             } else {
                 view.setScene(new TileScene(this, 4, speedType, playerControlSpeed));
             }
