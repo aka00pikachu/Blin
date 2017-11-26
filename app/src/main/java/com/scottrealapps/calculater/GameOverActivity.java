@@ -77,15 +77,17 @@ public class GameOverActivity extends AppCompatActivity
 
         //  Hopefully we were passed information about their score.
         Intent intent = getIntent();
+        String gameID = "";  //  some default... maybe a bad idea.
         if (intent != null) {
+            gameID = intent.getStringExtra(StartGameActivity.INTENT_GAME_ID);
             int score = intent.getIntExtra(StartGameActivity.INTENT_SCORE, 0);
             int speed = intent.getIntExtra(StartGameActivity.INTENT_SPEED, 0);
-            theirScore = new HighScore(null, score, speed);
+            theirScore = new HighScore(gameID, null, score, speed);
             scoreText.setText(score + ", speed " + speed);
 message.setText("You tried?");
         }
 
-        scores = HighScore.readScores(this);
+        scores = HighScore.readScores(this, gameID);
         if (scores == null) {
             scores = new ArrayList<HighScore>();
         }

@@ -236,6 +236,7 @@ public class TileScene implements Scene, View.OnTouchListener {
     private void gameOver() {
         //  ribbet!
         Intent intent = new Intent(context, GameOverActivity.class);
+        intent.putExtra(StartGameActivity.INTENT_GAME_ID, "");
         intent.putExtra(StartGameActivity.INTENT_SCORE, score);
         intent.putExtra(StartGameActivity.INTENT_SPEED, speed);
 //XXX this needs to be fixed; we need to send the speed type.

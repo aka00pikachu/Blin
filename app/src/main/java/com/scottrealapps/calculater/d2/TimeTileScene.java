@@ -224,6 +224,7 @@ public class TimeTileScene implements Scene, View.OnTouchListener {
         timeRemaining = 0;
         //  ribbet!
         Intent intent = new Intent(context, GameOverActivity.class);
+        intent.putExtra(StartGameActivity.INTENT_GAME_ID, "tt" + allowedTime);
         intent.putExtra(StartGameActivity.INTENT_SCORE, score);
         intent.putExtra(StartGameActivity.INTENT_SPEED, speed);
 //XXX this needs to be fixed; we need to send the speed type.

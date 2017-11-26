@@ -13,6 +13,8 @@ import android.widget.Toast;
 public class StartGameActivity extends AppCompatActivity {
 
     public static final int RESULT_GAME_DONE = RESULT_FIRST_USER + 1;
+    /**  Whether this is 2-minute timed tiles, 1-minute timed tiles, etc. */
+    public static final String INTENT_GAME_ID = "StartGameActivity.gameID";
     public static final String INTENT_SCORE = "StartGameActivity.score";
     public static final String INTENT_SPEED = "StartGameActivity.speed";
 
