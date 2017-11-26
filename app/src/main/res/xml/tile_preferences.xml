@@ -8,8 +8,8 @@
         android:dialogTitle="@string/pref_timeTiles"
         android:defaultValue="false" />
 
-    <PreferenceCategory android:title="@string/pref_timed"
-                        android:key="pref_timed">
+    <!-- PreferenceCategory android:title="@string/pref_timed"
+                        android:key="pref_timed" -->
         <ListPreference
             android:key="pref_timeAllowed"
             android:title="@string/pref_timeAllowed"
@@ -17,10 +17,10 @@
             android:entries="@array/pref_timeAllowed_titles"
             android:entryValues="@array/pref_timeAllowed_values"
             android:defaultValue="@string/pref_timeAllowed_default" />
-    </PreferenceCategory>
+    <!-- /PreferenceCategory -->
 
-    <PreferenceCategory android:title="@string/pref_untimed"
-                        android:key="pref_untimed">
+    <!-- PreferenceCategory android:title="@string/pref_untimed"
+                        android:key="pref_untimed" -->
         <ListPreference
             android:key="pref_speedType"
             android:title="@string/pref_speedType"
@@ -34,6 +34,6 @@
             android:title="@string/pref_playerControlSpeed"
             android:dialogTitle="@string/pref_playerControlSpeed"
             android:defaultValue="@string/pref_playerControlSpeed_default" />
-    </PreferenceCategory>
+    <!-- /PreferenceCategory -->
 
 </PreferenceScreen>
