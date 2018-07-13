@@ -3,10 +3,10 @@ In Android Studio 2.3.3:
 1. File -> New -> Project from Version Control -> GitHub
 
 2. Clone Repository:
-   - Repository URL: https://github.com/Panzarotti/EleeStuff.git
+   - Repository URL: https://github.com/aka00pikachu/Blin.git
    - Parent Directory: (whatever you want; probably
      /home/.../AndroidStudioProjects)
-   - Directory Name: (whatever you want; probably EleeStuff)
+   - Directory Name: (whatever you want; probably Blin)
 
 That should check the stuff out and start a Gradle build!  (I got a couple of
 errors about missing .iml files; I ignored them--I said to *not* remove the
