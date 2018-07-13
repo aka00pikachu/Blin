@@ -35,15 +35,15 @@ public class EnterNameDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 //XXX fix this
-        builder.setMessage("Are you Elee?")
+        builder.setMessage("Are you a Robot??")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.nameEntered("EPB");
+                        listener.nameEntered("Robot");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.nameEntered("RDB");
+                        listener.nameEntered("Human");
                     }
                 });
         return builder.create();
